@@ -1,0 +1,20 @@
+[project]
+name = "tm"
+version = "0.1.0"
+description = "A Turing machine simulator"
+readme = "README.md"
+authors = [
+    { name = "Ruben Bär", email = "ruben@baer.sh" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.3.1",
+    "termcolor>=3.3.0",
+]
+
+[project.scripts]
+tm = "tm:cli"
+
+[build-system]
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
