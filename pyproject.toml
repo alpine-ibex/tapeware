@@ -1,10 +1,11 @@
 [project]
-name = "tm"
+name = "tapeware"
 version = "0.1.0"
-description = "A Turing machine simulator"
+description = "A Turing machine simulator - keeps your computations fresh!"
 readme = "README.md"
+license = { text = "MPL-2.0" }
 authors = [
-    { name = "Ruben Bär", email = "ruben@baer.sh" }
+    { name = "Ruben Bär", email = "polar@bear.sh" }
 ]
 requires-python = ">=3.13"
 dependencies = [
@@ -13,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-tm = "tm:cli"
+tapeware = "tapeware:cli"
 
 [build-system]
 requires = ["uv_build>=0.9.18,<0.10.0"]

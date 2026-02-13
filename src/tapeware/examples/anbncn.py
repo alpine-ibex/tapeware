@@ -1,6 +1,10 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
-    Delta function for recognizing aⁿbⁿcⁿ
+    Delta function for recognising aⁿbⁿcⁿ
     
     Strategy:
     - q₀: Find first unmarked 'a', mark it as 'X', go to q₁

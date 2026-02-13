@@ -1,23 +1,26 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import click
 from termcolor import colored
 
-from tm.turing_machine import (
+from tapeware.turing_machine import (
     DeltaFunction,
     create_initial_config,
-    run_animated,
-    display_config
+    run_animated
 )
 
 
 @click.group()
 def cli() -> None:
-    """Run Turing machine demos and tests."""
+    """Tapeware - Turing machine simulator."""
 
 @cli.command()
 @click.argument("input_str", metavar="input", default=None)
 def end_ab(input_str: str | None = None) -> None:
     """Run the simple TM that accepts strings ending with 'ab'."""
-    from tm.examples.end_ab import delta_end_ab
+    from tapeware.examples.end_ab import delta_end_ab
 
     print("=" * 80)
     print(colored("Turing Machine: Simple TM (strings ending with 'ab')", "cyan", attrs=["bold"]))
@@ -48,7 +51,7 @@ def end_ab(input_str: str | None = None) -> None:
 @click.argument("input_str", metavar="input", default=None)
 def anbncn(input_str: str | None = None) -> None:
     """Run the aⁿbⁿcⁿ Turing machine demo."""
-    from tm.examples.anbncn import delta_anbncn
+    from tapeware.examples.anbncn import delta_anbncn
 
     print("=" * 80)
     print(colored("Turing Machine: aⁿbⁿcⁿ", "cyan", attrs=["bold"]))
@@ -82,7 +85,7 @@ def anbncn(input_str: str | None = None) -> None:
 @click.argument("input_str", metavar="input", default=None)
 def equal_01(input_str: str | None = None) -> None:
     """Run the equal 0s and 1s Turing machine demo."""
-    from tm.examples.equal_01 import delta_equal_01
+    from tapeware.examples.equal_01 import delta_equal_01
     
     print("=" * 80)
     print(colored("Turing Machine: Equal 0s and 1s", "cyan", attrs=["bold"]))
@@ -118,7 +121,7 @@ def run(input_str: str, delta: DeltaFunction, expected: bool | None = None) -> N
     print()
     
     config = create_initial_config(input_str, delta)
-    final_config = run_animated(config, delay=0.08)
+    run_animated(config, delay=0.08)
 
 
 if __name__ == "__main__":

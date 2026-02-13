@@ -1,10 +1,14 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 """
 Simple example: Create a custom Turing machine that accepts strings with equal 0s and 1s.
 """
 
 def delta_equal_01(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
-    Recognizes strings with equal number of 0s and 1s.
+    Recognises strings with equal number of 0s and 1s.
     
     Strategy:
     - Mark one '0' with 'X', mark one '1' with 'Y'

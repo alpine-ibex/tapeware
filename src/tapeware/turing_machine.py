@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from typing import Callable
 from dataclasses import dataclass, replace
 import time
@@ -25,15 +29,15 @@ class TMConfiguration:
     reject_states: frozenset[str]
     
     def is_halted(self) -> bool:
-        """Check if machine has halted (pure function)."""
+        """Check if machine has halted."""
         return self.state in self.accept_states or self.state in self.reject_states
     
     def is_accepted(self) -> bool:
-        """Check if machine is in accept state (pure function)."""
+        """Check if machine is in accept state."""
         return self.state in self.accept_states
     
     def current_symbol(self) -> str:
-        """Get symbol under head (pure function)."""
+        """Get symbol under head."""
         return self.tape[self.head]
 
 
@@ -46,7 +50,7 @@ def create_initial_config(
     blank_symbol: str = "□"
 ) -> TMConfiguration:
     """
-    Create initial TM configuration from input (pure function).
+    Create initial TM configuration from input.
     
     Returns an immutable configuration ready for execution.
     """
@@ -66,17 +70,17 @@ def create_initial_config(
 
 
 def extend_tape_left(tape: tuple[str, ...], blank: str, amount: int = 10) -> tuple[str, ...]:
-    """Extend tape to the left (pure function)."""
+    """Extend tape to the left."""
     return tuple([blank] * amount) + tape
 
 
 def extend_tape_right(tape: tuple[str, ...], blank: str, amount: int = 10) -> tuple[str, ...]:
-    """Extend tape to the right (pure function)."""
+    """Extend tape to the right."""
     return tape + tuple([blank] * amount)
 
 
 def write_symbol(tape: tuple[str, ...], position: int, symbol: str) -> tuple[str, ...]:
-    """Write symbol to tape at position (pure function, returns new tape)."""
+    """Write symbol to tape at position."""
     tape_list = list(tape)
     tape_list[position] = symbol
     return tuple(tape_list)
@@ -84,7 +88,7 @@ def write_symbol(tape: tuple[str, ...], position: int, symbol: str) -> tuple[str
 
 def step(config: TMConfiguration) -> TMConfiguration:
     """
-    Execute one step of the TM (pure function).
+    Execute one step of the TM.
     
     Takes a configuration and returns a new configuration after one transition.
     Does not mutate the input configuration.
@@ -134,7 +138,7 @@ def step(config: TMConfiguration) -> TMConfiguration:
 
 def run_until_halt(config: TMConfiguration, max_steps: int | None = None) -> TMConfiguration:
     """
-    Run TM until it halts (functional recursion with tail call optimization via iteration).
+    Run TM until it halts.
     
     Returns the final configuration.
     """
@@ -154,7 +158,7 @@ def run_with_history(config: TMConfiguration, max_steps: int | None = None) -> l
     """
     Run TM and collect all configurations (pure function).
     
-    Returns list of configurations at each step, useful for visualization.
+    Returns list of configurations at each step, useful for visualisation.
     """
     history = [config]
     current = config
