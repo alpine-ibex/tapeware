@@ -277,6 +277,53 @@ This simulator demonstrates the full computational power of Turing machines:
 - Context-sensitive (cannot be recognised by pushdown automaton)
 - Requires marking strategy to track equal counts
 
+## Runtime complexity comparison for aⁿbⁿcⁿ
+
+We analyse the growth rate of `anbncn` and `anbncn-alt`.
+
+### `anbncn`
+
+A computation shows that the 2nd difference is constant. Thus, the
+runtime complexity of this turing machine es quadratic.
+
+| n | Growth series | 1st difference | 2nd difference |
+|---|---------------|----------------|----------------|
+| 1 |            10 |                |                |
+| 2 |            29 |             19 |                |
+| 3 |            58 |             29 |             10 |
+| 4 |            97 |             39 |             10 |
+| 5 |           146 |             49 |             10 |
+
+One finds the growth series `aₙ = An² + Bn + C = 5n² + 4n + 1`, by solving the system of linear equations:
+
+```
+10 =  A +  B + C
+29 = 4A + 2B + C
+58 = 9A + 3B + C
+```
+
+### `anbncn-alt`
+
+A computation shows that the 2nd difference is constant. Thus, the
+runtime complexity of this turing machine es quadratic.
+
+| n | Growth series | 1st difference | 2nd difference |
+|---|---------------|----------------|----------------|
+| 1 |            14 |                |                |
+| 2 |            33 |             19 |                |
+| 3 |            60 |             27 |              8 |
+| 4 |            95 |             35 |              8 |
+| 5 |           138 |             43 |              8 |
+
+One finds the growth series `aₙ = An² + Bn + C = 4n² + 7n + 3`, by solving the system of linear equations:
+
+```
+14 =  A +  B + C
+33 = 4A + 2B + C
+60 = 9A + 3B + C
+```
+
+
 ## Implementation Notes
 
 - Tape extends automatically in both directions as needed
