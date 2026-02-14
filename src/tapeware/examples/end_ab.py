@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-def delta_end_ab(state: str, symbol: str) -> tuple[str, str, str] | None:
+def delta(state: str, symbol: str) -> tuple[str, str, str] | None:
     """Simple TM that accepts strings ending with 'ab'."""
 
     if state == "q₀":

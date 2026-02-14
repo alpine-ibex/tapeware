@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
+def delta(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
     Delta function for recognising aⁿbⁿcⁿ
 

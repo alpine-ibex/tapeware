@@ -7,7 +7,7 @@ Simple example: Create a custom Turing machine that accepts strings with equal 0
 """
 
 
-def delta_equal_01(state: str, symbol: str) -> tuple[str, str, str] | None:
+def delta(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
     Recognises strings with equal number of 0s and 1s.
 

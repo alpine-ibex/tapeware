@@ -12,6 +12,7 @@ from .turing_machine import (
     display_config,
     run_animated,
 )
+from .__main__ import cli
 
 
 # Export public API
@@ -24,4 +25,5 @@ __all__ = [
     "run_with_history",
     "display_config",
     "run_animated",
+    "cli",
 ]
