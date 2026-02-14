@@ -5,7 +5,7 @@
 
 def delta(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
-    Delta function for recognising aⁿbⁿcⁿ
+    Turing machine that recognises context-sensitive language aⁿbⁿcⁿ
 
     Strategy:
     - q₀: Find first unmarked 'a', mark it as 'X', go to q₁

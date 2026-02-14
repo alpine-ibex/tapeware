@@ -4,7 +4,16 @@
 
 
 def delta(state: str, symbol: str) -> tuple[str, str, str] | None:
-    """Simple TM that accepts strings ending with 'ab'."""
+    """
+    Turing machine that recognises regular language '[ab]*ab'.
+    
+    Strategy:
+    - q₀: Initial state, look for 'a' or 'b'
+    - q₁: Saw 'a', looking for 'b'
+    - q₂: Saw 'ab', looking for 'a' or 'b'
+    - qₐ: Accept state
+    - qᵣ: Reject state
+    """
 
     if state == "q₀":
         if symbol == "a":
