@@ -15,10 +15,11 @@ DeltaFunction = Callable[[str, str], tuple[str, str, str] | None]
 class TMConfiguration:
     """
     Immutable Turing Machine configuration.
-    
+
     Represents the complete state of a TM at a single point in time.
     All fields are immutable to support functional programming style.
     """
+
     tape: tuple[str, ...]
     head: int
     state: str
@@ -27,15 +28,15 @@ class TMConfiguration:
     delta: DeltaFunction
     accept_states: frozenset[str]
     reject_states: frozenset[str]
-    
+
     def is_halted(self) -> bool:
         """Check if machine has halted."""
         return self.state in self.accept_states or self.state in self.reject_states
-    
+
     def is_accepted(self) -> bool:
         """Check if machine is in accept state."""
         return self.state in self.accept_states
-    
+
     def current_symbol(self) -> str:
         """Get symbol under head."""
         return self.tape[self.head]
@@ -47,16 +48,16 @@ def create_initial_config(
     initial_state: str = "q₀",
     accept_states: set[str] | None = None,
     reject_states: set[str] | None = None,
-    blank_symbol: str = "□"
+    blank_symbol: str = "□",
 ) -> TMConfiguration:
     """
     Create initial TM configuration from input.
-    
+
     Returns an immutable configuration ready for execution.
     """
     blank = blank_symbol
     tape = tuple([blank] + list(input_string) + [blank] * 10)
-    
+
     return TMConfiguration(
         tape=tape,
         head=1,
@@ -65,16 +66,20 @@ def create_initial_config(
         blank=blank,
         delta=delta_function,
         accept_states=frozenset(accept_states or {"qₐ"}),
-        reject_states=frozenset(reject_states or {"qᵣ"})
+        reject_states=frozenset(reject_states or {"qᵣ"}),
     )
 
 
-def extend_tape_left(tape: tuple[str, ...], blank: str, amount: int = 10) -> tuple[str, ...]:
+def extend_tape_left(
+    tape: tuple[str, ...], blank: str, amount: int = 10
+) -> tuple[str, ...]:
     """Extend tape to the left."""
     return tuple([blank] * amount) + tape
 
 
-def extend_tape_right(tape: tuple[str, ...], blank: str, amount: int = 10) -> tuple[str, ...]:
+def extend_tape_right(
+    tape: tuple[str, ...], blank: str, amount: int = 10
+) -> tuple[str, ...]:
     """Extend tape to the right."""
     return tape + tuple([blank] * amount)
 
@@ -89,40 +94,40 @@ def write_symbol(tape: tuple[str, ...], position: int, symbol: str) -> tuple[str
 def step(config: TMConfiguration) -> TMConfiguration:
     """
     Execute one step of the TM.
-    
+
     Takes a configuration and returns a new configuration after one transition.
     Does not mutate the input configuration.
     """
     # If halted, return same configuration
     if config.is_halted():
         return config
-    
+
     # Get current symbol and apply delta function
     current_symbol = config.current_symbol()
     result = config.delta(config.state, current_symbol)
-    
+
     # If delta returns None, transition to reject state
     if result is None:
         if config.reject_states:
             reject_state = next(iter(config.reject_states))
             return replace(config, state=reject_state)
         return config
-    
+
     new_state, write_symbol_val, direction = result
-    
+
     # Write to tape
     new_tape = write_symbol(config.tape, config.head, write_symbol_val)
-    
+
     # Calculate new head position
     new_head = config.head + (1 if direction == "R" else -1)
-    
+
     # Extend tape if needed
     if new_head >= len(new_tape):
         new_tape = extend_tape_right(new_tape, config.blank)
     elif new_head < 0:
         new_tape = extend_tape_left(new_tape, config.blank)
         new_head = 10
-    
+
     # Return new configuration
     return TMConfiguration(
         tape=new_tape,
@@ -132,59 +137,65 @@ def step(config: TMConfiguration) -> TMConfiguration:
         blank=config.blank,
         delta=config.delta,
         accept_states=config.accept_states,
-        reject_states=config.reject_states
+        reject_states=config.reject_states,
     )
 
 
-def run_until_halt(config: TMConfiguration, max_steps: int | None = None) -> TMConfiguration:
+def run_until_halt(
+    config: TMConfiguration, max_steps: int | None = None
+) -> TMConfiguration:
     """
     Run TM until it halts.
-    
+
     Returns the final configuration.
     """
     current = config
     steps = 0
-    
+
     while not current.is_halted():
         if max_steps is not None and steps >= max_steps:
             break
         current = step(current)
         steps += 1
-    
+
     return current
 
 
-def run_with_history(config: TMConfiguration, max_steps: int | None = None) -> list[TMConfiguration]:
+def run_with_history(
+    config: TMConfiguration, max_steps: int | None = None
+) -> list[TMConfiguration]:
     """
     Run TM and collect all configurations (pure function).
-    
+
     Returns list of configurations at each step, useful for visualisation.
     """
     history = [config]
     current = config
     steps = 0
-    
+
     while not current.is_halted():
         if max_steps is not None and steps >= max_steps:
             break
         current = step(current)
         history.append(current)
         steps += 1
-    
+
     return history
 
 
 def display_config(config: TMConfiguration) -> None:
     """
     Display a configuration (side effect - not pure).
-    
+
     Separated from pure computation logic.
     """
     tape_display = ""
     for i, symbol in enumerate(config.tape):
         if i == config.head:
             # Current head position - highlighted in yellow
-            tape_display += colored(f" {symbol} ", "black", "on_light_yellow", attrs=['bold'])
+            tape_display += colored(
+                f" {symbol} ", "black", "on_light_yellow", attrs=["bold"]
+            )
         else:
             # Color scheme: lowercase=blue, uppercase=light green, blank=grey
             if symbol == config.blank:
@@ -197,7 +208,7 @@ def display_config(config: TMConfiguration) -> None:
                 tape_display += colored(f" {symbol} ", "white", "on_magenta")
             else:
                 tape_display += colored(f" {symbol} ", "white", "on_grey")
-    
+
     print(tape_display, end="")
 
     # Print step number and state
@@ -207,19 +218,23 @@ def display_config(config: TMConfiguration) -> None:
         state_color = "red"
     else:
         state_color = "cyan"
-    print(f" - Step {config.steps}: State = {colored(config.state, state_color, attrs=['bold'])}")
+    print(
+        f" - Step {config.steps}: State = {colored(config.state, state_color, attrs=['bold'])}"
+    )
 
 
-def run_animated(config: TMConfiguration, delay: float = 0.2, max_steps: int | None = None) -> TMConfiguration:
+def run_animated(
+    config: TMConfiguration, delay: float = 0.2, max_steps: int | None = None
+) -> TMConfiguration:
     """
     Run with animation (side effects for display and timing).
-    
+
     Separates pure computation from I/O.
     """
     display_config(config)
     current = config
     steps = 0
-    
+
     while not current.is_halted():
         if max_steps is not None and steps >= max_steps:
             break
@@ -227,13 +242,13 @@ def run_animated(config: TMConfiguration, delay: float = 0.2, max_steps: int | N
         current = step(current)
         display_config(current)
         steps += 1
-    
+
     # Final result
     print()
     if current.is_accepted():
-        print(colored("ACCEPTED", "green", attrs=['bold']))
+        print(colored("ACCEPTED", "green", attrs=["bold"]))
     else:
-        print(colored("REJECTED", "red", attrs=['bold']))
+        print(colored("REJECTED", "red", attrs=["bold"]))
     print()
-    
+
     return current

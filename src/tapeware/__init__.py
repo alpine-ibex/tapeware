@@ -10,18 +10,18 @@ from .turing_machine import (
     run_until_halt,
     run_with_history,
     display_config,
-    run_animated
+    run_animated,
 )
 
 
 # Export public API
 __all__ = [
-    'DeltaFunction',
-    'TMConfiguration',
-    'create_initial_config',
-    'step',
-    'run_until_halt',
-    'run_with_history',
-    'display_config',
-    'run_animated'
+    "DeltaFunction",
+    "TMConfiguration",
+    "create_initial_config",
+    "step",
+    "run_until_halt",
+    "run_with_history",
+    "display_config",
+    "run_animated",
 ]

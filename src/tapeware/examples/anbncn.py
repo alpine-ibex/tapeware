@@ -2,10 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
 def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
     """
     Delta function for recognising aⁿbⁿcⁿ
-    
+
     Strategy:
     - q₀: Find first unmarked 'a', mark it as 'X', go to q₁
     - q₁: Find first unmarked 'b', mark it as 'Y', go to q₂
@@ -15,7 +16,7 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
     - qₐ: Accept state
     - qᵣ: Reject state
     """
-    
+
     # State q₀: Initial state, look for first 'a'
     if state == "q₀":
         if symbol == "a":
@@ -28,7 +29,7 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
             return ("qₐ", "□", "R")  # Empty input, accept
         else:
             return None  # Reject
-    
+
     # State q₁: Marked 'a', looking for 'b'
     elif state == "q₁":
         if symbol == "a":
@@ -41,7 +42,7 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
             return ("q₁", "Y", "R")  # Skip marked 'b'
         else:
             return None  # No 'b' found, reject
-    
+
     # State q₂: Marked 'b', looking for 'c'
     elif state == "q₂":
         if symbol == "b":
@@ -54,14 +55,14 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
             return ("q₂", "Z", "R")  # Skip marked 'c'
         else:
             return None  # No 'c' found, reject
-    
+
     # State q₃: Go back to beginning
     elif state == "q₃":
         if symbol in ["a", "b", "c", "X", "Y", "Z"]:
             return ("q₃", symbol, "L")  # Keep going left
         elif symbol == "□":
             return ("q₀", "□", "R")  # Reached beginning, start new cycle
-    
+
     # State q₄: Check if all symbols are marked
     elif state == "q₄":
         if symbol == "Y":
@@ -72,24 +73,25 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
             return ("qₐ", "□", "R")  # All marked, accept
         else:
             return None  # Found unmarked symbol, reject
-    
+
     # Accept state
     elif state == "qₐ":
         return ("qₐ", symbol, "R")
-    
+
     # Reject state
     elif state == "qᵣ":
         return ("qᵣ", symbol, "R")
-    
+
     return None
 
+
 test_cases = (
-    ("", True),           # n=0
-    ("abc", True),        # n=1
-    ("aabbcc", True),     # n=2
+    ("", True),  # n=0
+    ("abc", True),  # n=1
+    ("aabbcc", True),  # n=2
     ("aaabbbccc", True),  # n=3
-    ("aabbbc", False),    # unequal
-    ("aaabbc", False),    # unequal
-    ("abbc", False),      # unequal
-    ("aabcc", False),     # unequal
+    ("aabbbc", False),  # unequal
+    ("aaabbc", False),  # unequal
+    ("abbc", False),  # unequal
+    ("aabcc", False),  # unequal
 )
