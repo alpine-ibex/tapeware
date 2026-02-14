@@ -22,10 +22,20 @@ A general-purpose, visual Turing machine simulator with support for custom delta
 
 ```bash
 # Test a specific input
-uv run tapeware anbncn "aaabbbccc"
+uv run tapeware anbncn aaabbbccc
 
 # Run all test cases
 uv run tapeware anbncn
+```
+
+Alternatively, run it directly from github:
+
+```bash
+# Test a specific input
+uvx --from git+https://github.com/alpine-ibex/tapeware tapeware anbncn aaabbbccc
+
+# Run all test cases
+uvx --from git+https://github.com/alpine-ibex/tapeware tapeware anbncn
 ```
 
 ### Creating a custom Turing machine:
