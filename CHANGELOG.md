@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.1] - 2026-02-14
+### Fixed
+- Grammar in anbncn
+
 ## [1.2.0] - 2026-02-14
 ### Added
 - Direct exit on last input
