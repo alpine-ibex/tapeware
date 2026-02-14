@@ -115,6 +115,20 @@ State colors:
 
 ## Built-in Examples
 
+### aⁿbⁿ (Context-Free Language)
+
+Recognises strings with equal numbers of a's, and b's in order.
+
+**Algorithm**: Mark one 'a' (→A), one 'b' (→B), repeat unit all marked.
+
+```bash
+uv run tapeware anbn "aaabbb"
+```
+
+**Test cases**:
+- Accept: `""`, `"ab"`, `"aabb"`, `"aaabbb"`
+- Reject: `"aab"`, `"aabbb"`, `"a"`
+
 ### aⁿbⁿcⁿ (Context-Sensitive Language)
 
 Recognises strings with equal numbers of a's, b's, and c's in order.
@@ -129,10 +143,30 @@ uv run tapeware anbncn "aaabbbccc"
 - Accept: `""`, `"abc"`, `"aabbcc"`, `"aaabbbccc"`
 - Reject: `"aabbc"`, `"aabbbc"`, `"abbc"`
 
+### aⁿbⁿcⁿ alternative (Context-Sensitive Language)
+
+Recognises strings with equal numbers of a's, b's, and c's in order.
+
+**Algorithm**: Use aⁿbⁿ twice; once on aⁿbⁿ, then on bⁿcⁿ
+
+```bash
+uv run tapeware anbncn-alt "aaabbbccc"
+```
+
+**Test cases**:
+- Accept: `""`, `"abc"`, `"aabbcc"`, `"aaabbbccc"`
+- Reject: `"aabbc"`, `"aabbbc"`, `"abbc"`
+
 ### Strings ending with "ab"
 
 ```bash
 uv run tapeware end-ab
+```
+
+### Strings with equal number of 0s and 1s
+
+```bash
+uv run tapeware end-01
 ```
 
 Simple example showing how to create custom delta functions.
