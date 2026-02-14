@@ -66,3 +66,16 @@ def delta_equal_01(state: str, symbol: str) -> tuple[str, str, str] | None:
         return ("qₐ", symbol, "R")
     
     return None
+
+
+test_cases = (
+    ("", True),          # n=0
+    ("01", True),        # n=1
+    ("0011", True),      # 2 0s, 2 1s
+    ("1100", True),      # 2 1s, 2 0s
+    ("001011", True),    # 3 0s, 3 1s
+    ("010101", True),    # 3 0s, 3 1s
+    ("0", False),        # 1 0, 0 1s
+    ("000111", True),    # 3 0s, 3 1s
+    ("00011", False),    # 3 0s, 2 1s
+)

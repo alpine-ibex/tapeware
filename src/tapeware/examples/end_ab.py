@@ -36,3 +36,13 @@ def delta_end_ab(state: str, symbol: str) -> tuple[str, str, str] | None:
         return ("qᵣ", symbol, "R")
     
     return None
+
+test_cases = (
+    ("ab", True),
+    ("aab", True),
+    ("bab", True),
+    ("aaab", True),
+    ("abab", True),
+    ("ba", False),
+    ("", False),
+)

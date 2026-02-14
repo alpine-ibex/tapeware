@@ -82,3 +82,14 @@ def delta_anbncn(state: str, symbol: str) -> tuple[str, str, str] | None:
         return ("qᵣ", symbol, "R")
     
     return None
+
+test_cases = (
+    ("", True),           # n=0
+    ("abc", True),        # n=1
+    ("aabbcc", True),     # n=2
+    ("aaabbbccc", True),  # n=3
+    ("aabbbc", False),    # unequal
+    ("aaabbc", False),    # unequal
+    ("abbc", False),      # unequal
+    ("aabcc", False),     # unequal
+)
