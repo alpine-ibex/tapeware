@@ -1,6 +1,6 @@
 [project]
 name = "tapeware"
-version = "1.1.0"
+version = "1.2.0"
 description = "A Turing machine simulator - keeps your computations fresh!"
 readme = "README.md"
 license = { text = "MPL-2.0" }

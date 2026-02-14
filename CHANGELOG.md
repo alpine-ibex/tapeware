@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0] - 2026-02-14
+### Added
+- Direct exit on last input
+- Growth series comparison for aⁿbⁿcⁿ implementations
+
 ## [1.1.0] - 2026-02-14
 ### Added
 - Support for dynamic versioning in `version.py`
