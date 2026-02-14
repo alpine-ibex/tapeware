@@ -90,7 +90,7 @@ def run(ctx: click.Context, delta: DeltaFunction, inputs: tuple[tuple[str, bool 
     print("=" * 80)
     print()
 
-    for input_str, expected in inputs:
+    for i, (input_str, expected) in enumerate(inputs):
         print(f"Input: {colored(repr(input_str), 'yellow', attrs=['bold'])}", end="")
         if expected is not None:
             print(
@@ -101,7 +101,9 @@ def run(ctx: click.Context, delta: DeltaFunction, inputs: tuple[tuple[str, bool 
 
         config = create_initial_config(input_str, delta)
         run_animated(config, delay=ctx.obj["delay"] if not ctx.obj["no_delay"] else 0)
-        if not ctx.obj["no_wait"]:
+
+        is_not_last = i < len(inputs) - 1
+        if not ctx.obj["no_wait"] and is_not_last:
             input("Press Enter for next test...")
         print()
 
