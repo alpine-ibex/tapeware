@@ -17,8 +17,7 @@ def cli() -> None:
 @click.argument("input_str", metavar="input", default=None)
 def end_ab(input_str: str | None = None) -> None:
     """Run the simple TM that accepts strings ending with 'ab'."""
-    from tapeware.examples.end_ab import delta
-    from tapeware.examples.end_ab import test_cases
+    from tapeware.examples.end_ab import delta, test_cases
 
     if input_str is not None:
         run(delta, ((input_str, None),))
@@ -30,8 +29,7 @@ def end_ab(input_str: str | None = None) -> None:
 @click.argument("input_str", metavar="input", default=None)
 def anbn(input_str: str | None = None) -> None:
     """Run the aⁿbⁿ Turing machine demo."""
-    from tapeware.examples.anbn import delta
-    from tapeware.examples.anbn import test_cases
+    from tapeware.examples.anbn import delta, test_cases
 
     if input_str is not None:
         run(delta, ((input_str, None),))
@@ -43,8 +41,19 @@ def anbn(input_str: str | None = None) -> None:
 @click.argument("input_str", metavar="input", default=None)
 def anbncn(input_str: str | None = None) -> None:
     """Run the aⁿbⁿcⁿ Turing machine demo."""
-    from tapeware.examples.anbncn import delta
-    from tapeware.examples.anbncn import test_cases
+    from tapeware.examples.anbncn import delta, test_cases
+
+    if input_str is not None:
+        run(delta, ((input_str, None),))
+    else:
+        run(delta, test_cases)
+
+
+@cli.command()
+@click.argument("input_str", metavar="input", default=None)
+def anbncn_alt(input_str: str | None = None) -> None:
+    """Run the alternative aⁿbⁿcⁿ Turing machine demo."""
+    from tapeware.examples.anbncn_alt import delta, test_cases
 
     if input_str is not None:
         run(delta, ((input_str, None),))
@@ -56,8 +65,7 @@ def anbncn(input_str: str | None = None) -> None:
 @click.argument("input_str", metavar="input", default=None)
 def equal_01(input_str: str | None = None) -> None:
     """Run the equal 0s and 1s Turing machine demo."""
-    from tapeware.examples.equal_01 import delta
-    from tapeware.examples.equal_01 import test_cases
+    from tapeware.examples.equal_01 import delta, test_cases
 
     if input_str is not None:
         run(delta, ((input_str, None),))
