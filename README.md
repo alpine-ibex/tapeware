@@ -242,26 +242,9 @@ def my_delta(state: str, symbol: str) -> tuple[str, str, str] | None:
     return None  # Reject if no transition defined
 ```
 
-## Code Structure
-
-```
-/
-├── src/tapeware/
-│   ├── examples/         # Example turing machines
-│   │   ├── __init__.py
-│   │   ├── anbncn.py     # Recognise strings aⁿbⁿcⁿ
-│   │   ├── end_ab.py     # Recognise strings ending with 'ab'
-│   │   └── equal_01.py  # Recognise strings with equal number of 0s and 1s.
-│   ├── __init__.py
-│   ├── __main__.py       # Entry point for `uv run tapeware`
-│   └── turing_machine.py # Turing machine implementation
-├── pyproject.toml        # Project configuration
-└── README.md             # This file
-```
-
 ## Dependencies
 
-- `click` - For a nice cli
+- `typer` - For a nice cli
 - `termcolor` - For colored terminal output
 
 ## Theory
