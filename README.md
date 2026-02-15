@@ -318,3 +318,13 @@ One finds the growth series `aₙ = An² + Bn + C = 4n² + 7n + 3`, by solving t
 ## Author
 
 Ruben Bär (polar@bear.sh)
+
+## License
+
+This project is dedicated to the public domain under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
+
+You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
+
+## Contributing
+
+This is an educational project. Feel free to explore and experiment!

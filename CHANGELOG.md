@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ---
 
 ## [Unreleased]
-### Added
-- Conributors file
 
 ---
+## [1.4.0] - 2026-02-15
+### Added
+- Conributors file
+- Change to CC0
+
 ## [1.3.0] - 2026-02-15
 ### Changed
 - CLI interface from Click to Typer
