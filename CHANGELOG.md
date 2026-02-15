@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ---
+## [1.3.0] - 2026-02-15
+### Changed
+- CLI interface from Click to Typer
 
 ## [1.2.1] - 2026-02-14
 ### Fixed

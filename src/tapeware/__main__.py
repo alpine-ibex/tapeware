@@ -2,27 +2,42 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import click
+import typer
 from termcolor import colored, cprint
+from typing import Annotated
 
 from tapeware.turing_machine import DeltaFunction, create_initial_config, run_animated
+from tapeware.version import __version__
 
 
-@click.group()
-@click.version_option()
-@click.pass_context
-@click.option("--delay", default=0.08, help="Delay between steps in seconds (default: 0.08)")
-@click.option("--no-delay", is_flag=True, help="Disable delay between steps")
-@click.option("--no-wait", is_flag=True, help="Disable waiting for user input between tests")
-def cli(ctx: click.Context, delay: float = 0.08, no_delay: bool = False, no_wait: bool = False) -> None:
+app = typer.Typer(help="Tapeware - Turing machine simulator.")
+
+
+@app.callback()
+def main(
+    ctx: typer.Context,
+    delay: Annotated[float, typer.Option(help="Delay between steps in seconds")] = 0.08,
+    no_delay: Annotated[bool, typer.Option(help="Disable delay between steps")] = False,
+    no_wait: Annotated[bool, typer.Option(help="Disable waiting for user input between tests")] = False,
+    version: Annotated[bool, typer.Option("--version", help="Show version and exit")] = False,
+) -> None:
     """Tapeware - Turing machine simulator."""
-    ctx.obj = {"delay": delay, "no_delay": no_delay, "no_wait": no_wait}
+    if version:
+        typer.echo(f"tapeware version {__version__}")
+        raise typer.Exit()
+
+    ctx.obj = {
+        "delay": delay,
+        "no_delay": no_delay,
+        "no_wait": no_wait,
+    }
 
 
-@cli.command()
-@click.argument("input_str", metavar="input", default=None)
-@click.pass_context
-def end_ab(ctx: click.Context, input_str: str | None = None) -> None:
+@app.command()
+def end_ab(
+    ctx: typer.Context,
+    input_str: Annotated[str | None, typer.Argument(metavar="input", help="Input string to process")] = None,
+) -> None:
     """Run the simple TM that accepts strings ending with 'ab'."""
     from tapeware.examples.end_ab import delta, test_cases
 
@@ -32,10 +47,11 @@ def end_ab(ctx: click.Context, input_str: str | None = None) -> None:
         run(ctx, delta, test_cases)
 
 
-@cli.command()
-@click.argument("input_str", metavar="input", default=None)
-@click.pass_context
-def anbn(ctx: click.Context, input_str: str | None = None) -> None:
+@app.command()
+def anbn(
+    ctx: typer.Context,
+    input_str: Annotated[str | None, typer.Argument(metavar="input", help="Input string to process")] = None,
+) -> None:
     """Run the aⁿbⁿ Turing machine demo."""
     from tapeware.examples.anbn import delta, test_cases
 
@@ -45,10 +61,11 @@ def anbn(ctx: click.Context, input_str: str | None = None) -> None:
         run(ctx, delta, test_cases)
 
 
-@cli.command()
-@click.argument("input_str", metavar="input", default=None)
-@click.pass_context
-def anbncn(ctx: click.Context, input_str: str | None = None) -> None:
+@app.command()
+def anbncn(
+    ctx: typer.Context,
+    input_str: Annotated[str | None, typer.Argument(metavar="input", help="Input string to process")] = None,
+) -> None:
     """Run the aⁿbⁿcⁿ Turing machine demo."""
     from tapeware.examples.anbncn import delta, test_cases
 
@@ -58,10 +75,11 @@ def anbncn(ctx: click.Context, input_str: str | None = None) -> None:
         run(ctx, delta, test_cases)
 
 
-@cli.command()
-@click.argument("input_str", metavar="input", default=None)
-@click.pass_context
-def anbncn_alt(ctx: click.Context, input_str: str | None = None) -> None:
+@app.command()
+def anbncn_alt(
+    ctx: typer.Context,
+    input_str: Annotated[str | None, typer.Argument(metavar="input", help="Input string to process")] = None,
+) -> None:
     """Run the alternative aⁿbⁿcⁿ Turing machine demo."""
     from tapeware.examples.anbncn_alt import delta, test_cases
 
@@ -71,10 +89,11 @@ def anbncn_alt(ctx: click.Context, input_str: str | None = None) -> None:
         run(ctx, delta, test_cases)
 
 
-@cli.command()
-@click.argument("input_str", metavar="input", default=None)
-@click.pass_context
-def equal_01(ctx: click.Context, input_str: str | None = None) -> None:
+@app.command()
+def equal_01(
+    ctx: typer.Context,
+    input_str: Annotated[str | None, typer.Argument(metavar="input", help="Input string to process")] = None,
+) -> None:
     """Run the equal 0s and 1s Turing machine demo."""
     from tapeware.examples.equal_01 import delta, test_cases
 
@@ -84,7 +103,11 @@ def equal_01(ctx: click.Context, input_str: str | None = None) -> None:
         run(ctx, delta, test_cases)
 
 
-def run(ctx: click.Context, delta: DeltaFunction, inputs: tuple[tuple[str, bool | None], ...]) -> None:
+def run(
+    ctx: typer.Context,
+    delta: DeltaFunction,
+    inputs: tuple[tuple[str, bool | None], ...],
+) -> None:
     print("=" * 80)
     cprint(delta.__doc__, "cyan", attrs=["bold"])
     print("=" * 80)
@@ -93,10 +116,7 @@ def run(ctx: click.Context, delta: DeltaFunction, inputs: tuple[tuple[str, bool 
     for i, (input_str, expected) in enumerate(inputs):
         print(f"Input: {colored(repr(input_str), 'yellow', attrs=['bold'])}", end="")
         if expected is not None:
-            print(
-                f" - Expected: {colored('ACCEPT' if expected else 'REJECT', 'cyan')}",
-                end="",
-            )
+            print(f" - Expected: {colored('ACCEPT' if expected else 'REJECT', 'cyan')}", end="",)
         print()
 
         config = create_initial_config(input_str, delta)
@@ -108,5 +128,8 @@ def run(ctx: click.Context, delta: DeltaFunction, inputs: tuple[tuple[str, bool 
         print()
 
 
+# Create CLI alias for backward compatibility
+cli = app
+
 if __name__ == "__main__":
-    cli()
+    app()
